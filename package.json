@@ -31,6 +31,7 @@
     "@clerk/clerk-react": "^4.32.2",
     "@fluentui/react-components": "^9.47.2",
     "@fluentui/react-icons": "^2.0.233",
+    "@workos-inc/authkit-react": "^0.1.2",
     "core-js": "^3.36.0",
     "es6-promise": "^4.2.8",
     "react": "^18.2.0",
