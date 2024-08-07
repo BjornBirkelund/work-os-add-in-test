@@ -6,7 +6,7 @@ import { AuthKitProvider } from "@workos-inc/authkit-react";
 
 /* global document, Office, module, require */
 
-const title = "Contoso Task Pane Add-in";
+const title = "Contoso Tak Pane Add-in";
 
 const rootElement = document.getElementById("container");
 const root = rootElement ? createRoot(rootElement) : undefined;
