@@ -2,7 +2,7 @@ import * as React from "react";
 import { createRoot } from "react-dom/client";
 import App from "./components/App";
 import { FluentProvider, webLightTheme } from "@fluentui/react-components";
-import { useAuth, AuthKitProvider } from "@workos-inc/authkit-react";
+import { AuthKitProvider } from "@workos-inc/authkit-react";
 
 /* global document, Office, module, require */
 
