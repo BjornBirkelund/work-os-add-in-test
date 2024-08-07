@@ -28,7 +28,7 @@
     "watch": "webpack --mode development --watch"
   },
   "dependencies": {
-    "@clerk/clerk-react": "^4.32.2",
+    "@clerk/clerk-react": "^5.3.3",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@fluentui/react-components": "^9.47.2",
