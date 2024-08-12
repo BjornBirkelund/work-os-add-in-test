@@ -1,11 +1,6 @@
 import * as React from "react";
-import PropTypes from "prop-types";
-import Header from "./Header";
-import HeroList from "./HeroList";
-import TextInsertion from "./TextInsertion";
+import { useState, useEffect } from "react";
 import { Spinner, makeStyles } from "@fluentui/react-components";
-import { Ribbon24Regular, LockOpen24Regular, DesignIdeas24Regular } from "@fluentui/react-icons";
-import { insertText } from "../taskpane";
 import { useAuth } from "@workos-inc/authkit-react";
 
 const useStyles = makeStyles({
@@ -15,45 +10,68 @@ const useStyles = makeStyles({
 });
 
 const App = (props) => {
-  const { user, getAccessToken, isLoading, signIn, signUp, signOut } = useAuth();
-  if (isLoading) {
+  const { isLoading, signOut } = useAuth();
+  const [isAuthenticating, setIsAuthenticating] = useState(false);
+  const [userId, setUserId] = useState("");
+  const styles = useStyles();
+
+  useEffect(() => {
+    if (!userId && !isAuthenticating && !isLoading) {
+      handleSignIn();
+    }
+  }, [userId, isAuthenticating, isLoading]);
+
+  const handleSignIn = async () => {
+    setIsAuthenticating(true);
+    try {
+      await Office.context.ui.displayDialogAsync(
+        "https://localhost:3000/auth.html",
+        { height: 60, width: 30 },
+        //below is a callback function that is called when the dialog is opened
+        (result) => {
+          if (result.status === Office.AsyncResultStatus.Succeeded) {
+            const dialog = result.value;
+            dialog.addEventHandler(Office.EventType.DialogMessageReceived, (arg) => {
+              const message = JSON.parse(arg.message);
+              //if we are recieving a success message, we close the dialog and set the userId
+              if (message.type === "AUTH_SUCCESS") {
+                dialog.close();
+                setIsAuthenticating(false);
+                setUserId(message.user.id);
+              } else if (message.type === "AUTH_FAILURE") {
+                //if we are recieving a failure message, we close the dialog and set the userId to an empty string
+                setUserId("");
+                dialog.close();
+                setIsAuthenticating(false);
+                console.error("Authentication failed:", message.error);
+              }
+            });
+          } else {
+            setIsAuthenticating(false);
+            console.error("Error opening dialog:", result.error.message);
+          }
+        }
+      );
+    } catch (error) {
+      setIsAuthenticating(false);
+      console.error("Error in handleSignIn:", error);
+    }
+  };
+
+  if (isLoading || isAuthenticating) {
     return <Spinner />;
   }
 
-  const performMutation = async () => {
-    const accessToken = await getAccessToken();
-    console.log("api request with accessToken", accessToken);
-  };
-
-  if (user) {
+  if (userId) {
     return (
-      <div>
-        Hello, {user.email}
-        <p>
-          <button
-            onClick={() => {
-              performMutation();
-            }}
-          >
-            Make API Request
-          </button>
-        </p>
-        <p>
-          <button onClick={() => signOut()}>Sign out</button>
-        </p>
+      <div className={styles.root}>
+        <h1>Welcome, {userId}</h1>
+        <button onClick={() => signOut()}>Sign out</button>
       </div>
     );
   }
 
-  return (
-    <>
-      <button onClick={() => signIn()}>Sign in</button> <button onClick={() => signUp()}>Sign up</button>
-    </>
-  );
-};
-
-App.propTypes = {
-  title: PropTypes.string,
+  return null;
 };
 
 export default App;

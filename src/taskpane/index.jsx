@@ -14,7 +14,7 @@ const root = rootElement ? createRoot(rootElement) : undefined;
 /* Render application after Office initializes */
 Office.onReady(() => {
   root?.render(
-    <AuthKitProvider clientId="client_01J4Q0J2F830SXK60KBGG9WP9Z">
+    <AuthKitProvider clientId="client_01J4Q0J2F830SXK60KBGG9WP9Z" redirectUri="https://localhost:3000/auth.html">
       <FluentProvider theme={webLightTheme}>
         <App title={title} />
       </FluentProvider>

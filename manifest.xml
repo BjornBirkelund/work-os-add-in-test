@@ -10,8 +10,9 @@
   <HighResolutionIconUrl DefaultValue="https://localhost:3000/assets/icon-64.png"/>
   <SupportUrl DefaultValue="https://www.contoso.com/help"/>
   <AppDomains>
-    <AppDomain>https://www.contoso.com</AppDomain>
-  </AppDomains>
+  <AppDomain>https://www.contoso.com</AppDomain>
+  <AppDomain>https://auth.workos.com</AppDomain>
+</AppDomains>
   <Hosts>
     <Host Name="Workbook"/>
   </Hosts>

@@ -21,6 +21,7 @@ module.exports = async (env, options) => {
     entry: {
       polyfill: ["core-js/stable", "regenerator-runtime/runtime"],
       vendor: ["react", "react-dom", "core-js", "@fluentui/react-components", "@fluentui/react-icons"],
+      auth: "./src/auth/auth.js",
       taskpane: ["./src/taskpane/index.jsx", "./src/taskpane/taskpane.html"],
       commands: "./src/commands/commands.js",
     },
@@ -76,6 +77,11 @@ module.exports = async (env, options) => {
             },
           },
         ],
+      }),
+      new HtmlWebpackPlugin({
+        filename: "auth.html",
+        template: "./src/auth/auth.html",
+        chunks: ["auth"],
       }),
       new HtmlWebpackPlugin({
         filename: "taskpane.html",
