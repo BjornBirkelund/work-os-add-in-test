@@ -40,8 +40,8 @@ const App = (props) => {
                 setUserId(message.user.id);
                 console.log("User authenticated:", message.user);
               } else if (message.type === "AUTH_FAILURE") {
-                //if we are recieving a failure message, we close the dialog and set the userId to an empty string
-                // setUserId("");
+                //if we are recieving a failure message, we close the dialog
+                setUserId("");
                 dialog.close();
                 setIsAuthenticating(false);
                 console.error("Authentication failed:", message.error);
@@ -61,33 +61,39 @@ const App = (props) => {
 
   const handleSignOut = async () => {
     try {
-      // Open a new dialog for sign-out
       await Office.context.ui.displayDialogAsync(
         "https://localhost:3000/auth.html?action=signout",
         { height: 60, width: 30 },
         (result) => {
           if (result.status === Office.AsyncResultStatus.Succeeded) {
             const dialog = result.value;
-            window.activeDialog = dialog;
             dialog.addEventHandler(Office.EventType.DialogMessageReceived, (arg) => {
               const message = JSON.parse(arg.message);
+              console.log("SIGN OUT MESSAGE", message);
               if (message.type === "SIGN_OUT_COMPLETE") {
                 dialog.close();
-                window.activeDialog = null;
                 setUserId("");
+                console.log("User signed out successfully");
+              } else if (message.type === "SIGN_OUT_ERROR") {
+                dialog.close();
+                console.error("Error signing out:", message.error);
               }
             });
           }
         }
       );
     } catch (error) {
-      console.error("Error signing out:", error);
+      console.error("Error opening sign-out dialog:", error);
     }
   };
 
-  // if (isLoading || isAuthenticating) {
-  //   return <Spinner />;
-  // }
+  if (isLoading || isAuthenticating) {
+    return (
+      <>
+        <Spinner /> <p>No one is signed in...</p>
+      </>
+    );
+  }
 
   if (userId) {
     return (
@@ -99,12 +105,11 @@ const App = (props) => {
   } else {
     return (
       <div className={styles.root}>
-        No one is signed in...
+        <p>No one is signed in...</p>
+        <Button onClick={handleSignIn}>Sign In</Button>
       </div>
     );
   }
-
-  return null;
 };
 
 export default App;

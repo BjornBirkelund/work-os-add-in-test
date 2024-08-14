@@ -9,8 +9,17 @@ const WorkOSAuth = () => {
     const urlParams = new URLSearchParams(window.location.search);
     const action = urlParams.get("action");
 
+    const handleSignOut = async () => {
+      try {
+        await signOut();
+        Office.context.ui.messageParent(JSON.stringify({ type: "SIGN_OUT_COMPLETE" }));
+      } catch (error) {
+        Office.context.ui.messageParent(JSON.stringify({ type: "SIGN_OUT_ERROR", error: error.message }));
+      }
+    };
+
     if (action === "signout") {
-      signOut();
+      handleSignOut();
     } else if (!user) {
       signIn();
     } else {
