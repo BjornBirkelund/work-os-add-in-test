@@ -25,7 +25,8 @@ const App = (props) => {
     setIsAuthenticating(true);
     try {
       await Office.context.ui.displayDialogAsync(
-        "https://localhost:3000/auth.html",
+        // "https://localhost:3000/auth.html",
+        "https://work-os-addin.filot.ai/auth.html",
         { height: 60, width: 30 },
         //below is a callback function that is called when the dialog is opened
         (result) => {
@@ -62,7 +63,8 @@ const App = (props) => {
   const handleSignOut = async () => {
     try {
       await Office.context.ui.displayDialogAsync(
-        "https://localhost:3000/auth.html?action=signout",
+        // "https://localhost:3000/auth.html?action=signout",
+        "https://work-os-addin.filot.ai/auth.html?action=signout",
         { height: 60, width: 30 },
         (result) => {
           if (result.status === Office.AsyncResultStatus.Succeeded) {

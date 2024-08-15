@@ -14,7 +14,11 @@ const root = rootElement ? createRoot(rootElement) : undefined;
 /* Render application after Office initializes */
 Office.onReady(() => {
   root?.render(
-    <AuthKitProvider clientId="client_01J4Q0J2F830SXK60KBGG9WP9Z" redirectUri="https://localhost:3000/auth.html">
+    // <AuthKitProvider clientId="client_01J4Q0J2F830SXK60KBGG9WP9Z" redirectUri="https://localhost:3000/auth.html">
+    <AuthKitProvider
+      clientId="client_01J4Q0J2NYCFEPTYZR2W4GV4NC"
+      redirectUri="https://work-os-addin.filot.ai/auth.html"
+    >
       <FluentProvider theme={webLightTheme}>
         <App title={title} />
       </FluentProvider>

@@ -8,7 +8,11 @@ Office.initialize = function () {
   const root = createRoot(container);
 
   root.render(
-    <AuthKitProvider clientId="client_01J4Q0J2F830SXK60KBGG9WP9Z" redirectUri="https://localhost:3000/auth.html">
+    // <AuthKitProvider clientId="client_01J4Q0J2F830SXK60KBGG9WP9Z" redirectUri="https://localhost:3000/auth.html"></AuthKitProvider>
+    <AuthKitProvider
+      clientId="client_01J4Q0J2NYCFEPTYZR2W4GV4NC"
+      redirectUri="https://work-os-addin.filot.ai/auth.html"
+    >
       <WorkOSAuth />
     </AuthKitProvider>
   );

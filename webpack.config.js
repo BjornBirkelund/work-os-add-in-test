@@ -7,7 +7,7 @@ const webpack = require("webpack");
 const path = require("path"); // Add this line
 
 const urlDev = "https://localhost:3000/";
-const urlProd = "https://test.filot.ai/"; // CHANGE THIS TO YOUR PRODUCTION DEPLOYMENT LOCATION
+const urlProd = "https://work-os-addin.filot.ai/"; // CHANGE THIS TO YOUR PRODUCTION DEPLOYMENT LOCATION
 
 async function getHttpsOptions() {
   const httpsOptions = await devCerts.getHttpsServerOptions();
