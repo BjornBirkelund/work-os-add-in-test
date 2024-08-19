@@ -16,7 +16,6 @@ Office.onReady(() => {
   root?.render(
     // <AuthKitProvider clientId="client_01J4Q0J2F830SXK60KBGG9WP9Z" redirectUri="https://localhost:3000/auth.html">
     <AuthKitProvider
-      devMode={true}
       clientId="client_01J4Q0J2NYCFEPTYZR2W4GV4NC"
       apiHostname="work-os-addin.filot.ai"
       redirectUri="https://work-os-addin.filot.ai/auth.html"
