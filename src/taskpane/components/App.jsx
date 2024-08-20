@@ -64,7 +64,12 @@ const App = (props) => {
   const handleSignOut = async () => {
     try {
       await signOut();
-      setUserId(user.id);
+      if (user) {
+        setUserId(user?.id);
+      } else {
+        console.log("user:", user, "not found...");
+      }
+
       // await Office.context.ui.displayDialogAsync(
       //   // "https://localhost:3000/auth.html?action=signout",
       //   "https://work-os-addin.filot.ai/auth.html?action=signout",
