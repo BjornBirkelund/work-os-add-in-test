@@ -15,11 +15,11 @@ const App = (props) => {
   const [userId, setUserId] = useState("");
   const styles = useStyles();
 
-  // useEffect(() => {
-  //   if (!userId && !isAuthenticating && !isLoading) {
-  //     handleSignIn();
-  //   }
-  // }, [userId, isAuthenticating, isLoading]);
+  useEffect(() => {
+    if (!userId && !isAuthenticating && !isLoading) {
+      handleSignIn();
+    }
+  }, [userId, isAuthenticating, isLoading]);
 
   const handleSignIn = async () => {
     setIsAuthenticating(true);
@@ -59,31 +59,34 @@ const App = (props) => {
       console.error("Error in handleSignIn:", error);
     }
   };
+  const { signIn, signOut, user, error } = useAuth();
 
   const handleSignOut = async () => {
     try {
-      await Office.context.ui.displayDialogAsync(
-        // "https://localhost:3000/auth.html?action=signout",
-        "https://work-os-addin.filot.ai/auth.html?action=signout",
-        { height: 60, width: 30 },
-        (result) => {
-          if (result.status === Office.AsyncResultStatus.Succeeded) {
-            const dialog = result.value;
-            dialog.addEventHandler(Office.EventType.DialogMessageReceived, (arg) => {
-              const message = JSON.parse(arg.message);
-              console.log("SIGN OUT MESSAGE", message);
-              if (message.type === "SIGN_OUT_COMPLETE") {
-                dialog.close();
-                setUserId("");
-                console.log("User signed out successfully");
-              } else if (message.type === "SIGN_OUT_ERROR") {
-                dialog.close();
-                console.error("Error signing out:", message.error);
-              }
-            });
-          }
-        }
-      );
+      await signOut();
+      setUserId(user.id);
+      // await Office.context.ui.displayDialogAsync(
+      //   // "https://localhost:3000/auth.html?action=signout",
+      //   "https://work-os-addin.filot.ai/auth.html?action=signout",
+      //   { height: 60, width: 30 },
+      //   (result) => {
+      //     if (result.status === Office.AsyncResultStatus.Succeeded) {
+      //       const dialog = result.value;
+      //       dialog.addEventHandler(Office.EventType.DialogMessageReceived, (arg) => {
+      //         const message = JSON.parse(arg.message);
+      //         console.log("SIGN OUT MESSAGE", message);
+      //         if (message.type === "SIGN_OUT_COMPLETE") {
+      //           dialog.close();
+      //           setUserId("");
+      //           console.log("User signed out successfully");
+      //         } else if (message.type === "SIGN_OUT_ERROR") {
+      //           dialog.close();
+      //           console.error("Error signing out:", message.error);
+      //         }
+      //       });
+      //     }
+      //   }
+      // );
     } catch (error) {
       console.error("Error opening sign-out dialog:", error);
     }
@@ -93,11 +96,11 @@ const App = (props) => {
     return (
       <>
         <Spinner /> <p>No one is signed in...</p>
-        <Button onClick={handleSignIn}>Sign In</Button>
       </>
     );
   }
 
+  console.log({ user });
   if (userId) {
     return (
       <div className={styles.root}>
