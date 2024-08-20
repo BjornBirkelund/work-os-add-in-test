@@ -15,11 +15,11 @@ const App = (props) => {
   const [userId, setUserId] = useState("");
   const styles = useStyles();
 
-  useEffect(() => {
-    if (!userId && !isAuthenticating && !isLoading) {
-      handleSignIn();
-    }
-  }, [userId, isAuthenticating, isLoading]);
+  // useEffect(() => {
+  //   if (!userId && !isAuthenticating && !isLoading) {
+  //     handleSignIn();
+  //   }
+  // }, [userId, isAuthenticating, isLoading]);
 
   const handleSignIn = async () => {
     setIsAuthenticating(true);
@@ -93,6 +93,7 @@ const App = (props) => {
     return (
       <>
         <Spinner /> <p>No one is signed in...</p>
+        <Button onClick={handleSignIn}>Sign In</Button>
       </>
     );
   }
