@@ -11,7 +11,7 @@ const WorkOSAuth = () => {
       await signOut();
       console.log("user after sign out", user);
       // Wait for a short time to ensure the signOut has taken effect
-      await new Promise(resolve => setTimeout(resolve, 500));
+      await new Promise(resolve => setTimeout(resolve, 2000));
       const currentUser = await getUser();
       if (!currentUser) {
         Office.context.ui.messageParent(JSON.stringify({ type: "SIGN_OUT_COMPLETE" }));
