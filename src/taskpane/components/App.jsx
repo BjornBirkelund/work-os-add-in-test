@@ -13,13 +13,14 @@ const App = (props) => {
   const { isLoading } = useAuth();
   const [isAuthenticating, setIsAuthenticating] = useState(false);
   const [userId, setUserId] = useState("");
+  const [justSignedOut, setJustSignedOut] = useState(false);
   const styles = useStyles();
 
   useEffect(() => {
-    if (!userId && !isAuthenticating && !isLoading) {
+    if (!userId && !isAuthenticating && !isLoading && !justSignedOut) {
       handleSignIn();
     }
-  }, [userId, isAuthenticating, isLoading]);
+  }, [userId, isAuthenticating, isLoading, justSignedOut]);
 
   const handleSignIn = async () => {
     setIsAuthenticating(true);
@@ -77,7 +78,9 @@ const App = (props) => {
               if (message.type === "SIGN_OUT_COMPLETE") {
                 dialog.close();
                 setUserId("");
+                setJustSignedOut(true);
                 console.log("User signed out successfully");
+                setTimeout(() => setJustSignedOut(false), 1000); // Reset after 1 second
               } else if (message.type === "SIGN_OUT_ERROR") {
                 dialog.close();
                 console.error("Error signing out:", message.error);

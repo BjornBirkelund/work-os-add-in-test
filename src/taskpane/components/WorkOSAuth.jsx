@@ -12,9 +12,16 @@ const WorkOSAuth = () => {
     const handleSignOut = async () => {
       try {
         console.log("user before sign out", user);
-        signOut();
+        await signOut();
         console.log("user after sign out", user);
-        Office.context.ui.messageParent(JSON.stringify({ type: "SIGN_OUT_COMPLETE", user }));
+        // Wait for a short time to ensure the signOut has taken effect
+        await new Promise(resolve => setTimeout(resolve, 500));
+        const currentUser = await useAuth().getUser();
+        if (!currentUser) {
+          Office.context.ui.messageParent(JSON.stringify({ type: "SIGN_OUT_COMPLETE" }));
+        } else {
+          throw new Error("Sign out failed");
+        }
       } catch (error) {
         Office.context.ui.messageParent(JSON.stringify({ type: "SIGN_OUT_ERROR", error: error.message }));
       }
