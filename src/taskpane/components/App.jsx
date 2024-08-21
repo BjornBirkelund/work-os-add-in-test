@@ -46,6 +46,8 @@ const App = (props) => {
                 dialog.close();
                 setIsAuthenticating(false);
                 console.error("Authentication failed:", message.error);
+              } else {
+                console.log("Unknown message", message);
               }
             });
           } else {
