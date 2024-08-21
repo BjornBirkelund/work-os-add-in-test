@@ -33,7 +33,7 @@ const App = (props) => {
                 setUserId("");
                 setJustSignedOut(true);
                 console.log("User signed out successfully");
-                setTimeout(() => setJustSignedOut(false), 1000); // Reset after 1 second
+                setTimeout(() => setJustSignedOut(false), 2000); // Reset after 2 seconds
               } else if (message.type === "SIGN_OUT_ERROR") {
                 dialog.close();
                 console.error("Error signing out:", message.error);
