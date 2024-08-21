@@ -10,7 +10,7 @@ const useStyles = makeStyles({
 });
 
 const App = (props) => {
-  const { isLoading } = useAuth();
+  const { signIn, signOut, user, error, isLoading } = useAuth();
   const [isAuthenticating, setIsAuthenticating] = useState(false);
   const [userId, setUserId] = useState("");
   const styles = useStyles();
@@ -59,7 +59,6 @@ const App = (props) => {
       console.error("Error in handleSignIn:", error);
     }
   };
-  const { signIn, signOut, user, error } = useAuth();
 
   const handleSignOut = async () => {
     try {
