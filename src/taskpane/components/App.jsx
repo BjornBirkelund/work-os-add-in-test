@@ -66,6 +66,7 @@ const App = (props) => {
       if (user) {
         setUserId(user?.id);
       } else {
+        setUserId("");
         console.log("user:", user, "not found...");
       }
 
@@ -105,7 +106,7 @@ const App = (props) => {
   }
 
   console.log({ user });
-  if (userId) {
+  if (userId.length > 0) {
     return (
       <div className={styles.root}>
         <h1>Welcome, {userId}</h1>
